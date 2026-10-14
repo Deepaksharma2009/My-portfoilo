@@ -1,0 +1,56 @@
+<section id="about" aria-labelledby="about-heading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">About Me</span>
+      <h2 class="section-title" id="about-heading">Who I Am</h2>
+      <p class="section-subtitle">A passionate developer building impactful digital solutions</p>
+    </div>
+
+    <div class="row align-items-center gy-5">
+      <!-- Left: Profile Image -->
+      <div class="col-lg-4 text-center">
+        <div class="about-image-wrapper">
+          <div class="about-image-placeholder" aria-label="Deepak Sharma profile photo">
+            <i class="fas fa-user" aria-hidden="true"></i>
+          </div>
+          <div class="about-image-glow" aria-hidden="true"></div>
+        </div>
+
+        <!-- Stats -->
+        <div class="about-stats mt-4">
+          <div class="stat-item">
+            <span class="stat-number gradient-text">{{ about.yearsExperience }}</span>
+            <span class="stat-label">Years Exp.</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-number gradient-text">{{ about.projectsCompleted }}</span>
+            <span class="stat-label">Projects</span>
+          </div>
+          <div class="stat-divider" aria-hidden="true"></div>
+          <div class="stat-item">
+            <span class="stat-number gradient-text">{{ about.technologiesUsed }}</span>
+            <span class="stat-label">Technologies</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: Content -->
+      <div class="col-lg-8">
+        <div class="about-content">
+          <p class="about-summary">{{ about.summary }}</p>
+
+          <h3 class="highlights-heading">What I Work On</h3>
+          <div class="highlights-grid">
+            @for (item of about.highlights; track item.label) {
+              <div class="highlight-item glass-card">
+                <i [class]="item.icon" aria-hidden="true"></i>
+                <span>{{ item.label }}</span>
+              </div>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

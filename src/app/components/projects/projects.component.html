@@ -1,0 +1,175 @@
+<section id="projects" aria-labelledby="projects-heading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Portfolio</span>
+      <h2 class="section-title" id="projects-heading">My Projects</h2>
+      <p class="section-subtitle">A showcase of my work across different technologies</p>
+    </div>
+
+    <!-- Filters -->
+    <div class="project-filters" role="group" aria-label="Filter projects by category">
+      @for (cat of categories; track cat) {
+        <button
+          class="filter-btn"
+          [class.active]="activeCategory() === cat"
+          (click)="setFilter(cat)"
+          [attr.aria-pressed]="activeCategory() === cat"
+        >
+          {{ cat }}
+        </button>
+      }
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="projects-grid" aria-live="polite" aria-atomic="false">
+      @for (project of filteredProjects(); track project.id) {
+        <article class="project-card glass-card" [attr.aria-label]="project.title">
+          <!-- Project Image / Placeholder -->
+          <div class="project-image">
+            @if (project.imageUrl) {
+              <img [src]="project.imageUrl" [alt]="project.title + ' screenshot'" loading="lazy" />
+            } @else {
+              <div class="project-image-placeholder" aria-hidden="true">
+                <i class="fas fa-code"></i>
+              </div>
+            }
+            <div class="project-overlay" aria-hidden="true"></div>
+            <span class="project-category-badge">{{ project.category }}</span>
+          </div>
+
+          <!-- Project Info -->
+          <div class="project-info">
+            <h3 class="project-title">{{ project.title }}</h3>
+            <p class="project-description">{{ project.description }}</p>
+
+            <!-- Tech Badges -->
+            <div class="project-tech" role="list" [attr.aria-label]="project.title + ' technologies'">
+              @for (tech of project.technologies.slice(0, 4); track tech) {
+                <span class="tech-badge" role="listitem">{{ tech }}</span>
+              }
+              @if (project.technologies.length > 4) {
+                <span class="tech-badge">+{{ project.technologies.length - 4 }}</span>
+              }
+            </div>
+
+            <!-- Actions -->
+            <div class="project-actions">
+              <button
+                class="btn-gradient btn-sm"
+                (click)="openModal(project)"
+                [attr.aria-label]="'View details for ' + project.title"
+              >
+                <i class="fas fa-eye"></i> Details
+              </button>
+              @if (project.githubUrl) {
+                <a
+                  [href]="project.githubUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-icon"
+                  [attr.aria-label]="'GitHub repository for ' + project.title"
+                >
+                  <i class="fab fa-github"></i>
+                </a>
+              }
+              @if (project.liveUrl) {
+                <a
+                  [href]="project.liveUrl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="btn-icon"
+                  [attr.aria-label]="'Live demo for ' + project.title"
+                >
+                  <i class="fas fa-external-link-alt"></i>
+                </a>
+              }
+            </div>
+          </div>
+        </article>
+      }
+
+      @if (filteredProjects().length === 0) {
+        <div class="no-projects text-center" style="grid-column: 1/-1">
+          <i class="fas fa-search fa-2x mb-3" style="color: var(--text-muted)"></i>
+          <p class="text-muted">No projects in this category yet.</p>
+        </div>
+      }
+    </div>
+  </div>
+</section>
+
+<!-- Project Details Modal -->
+@if (selectedProject()) {
+  <div
+    class="modal-overlay"
+    role="dialog"
+    aria-modal="true"
+    [attr.aria-label]="selectedProject()!.title + ' details'"
+    (click)="closeModal()"
+  >
+    <div class="modal-content glass-card" (click)="$event.stopPropagation()">
+      <button class="modal-close" (click)="closeModal()" aria-label="Close project details">
+        <i class="fas fa-times"></i>
+      </button>
+
+      <div class="modal-header">
+        <span class="project-category-badge">{{ selectedProject()!.category }}</span>
+        <h2 class="modal-title">{{ selectedProject()!.title }}</h2>
+      </div>
+
+      <p class="modal-description">{{ selectedProject()!.fullDescription }}</p>
+
+      <div class="modal-section">
+        <h4>Technologies Used</h4>
+        <div class="project-tech">
+          @for (tech of selectedProject()!.technologies; track tech) {
+            <span class="tech-badge">{{ tech }}</span>
+          }
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h4>Key Features</h4>
+        <ul class="features-list">
+          @for (feature of selectedProject()!.features; track feature) {
+            <li>
+              <i class="fas fa-check-circle" aria-hidden="true"></i>
+              {{ feature }}
+            </li>
+          }
+        </ul>
+      </div>
+
+      <div class="modal-actions">
+        @if (selectedProject()!.githubUrl) {
+          <a
+            [href]="selectedProject()!.githubUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-outline-gradient"
+            aria-label="View on GitHub"
+          >
+            <i class="fab fa-github"></i> View on GitHub
+          </a>
+        }
+        @if (selectedProject()!.liveUrl) {
+          <a
+            [href]="selectedProject()!.liveUrl"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-gradient"
+            aria-label="View live demo"
+          >
+            <i class="fas fa-external-link-alt"></i> Live Demo
+          </a>
+        }
+        @if (!selectedProject()!.githubUrl && !selectedProject()!.liveUrl) {
+          <p class="no-links-note">
+            <i class="fas fa-info-circle"></i>
+            Configure GitHub and live URLs in <code>src/app/data/portfolio.data.ts</code>
+          </p>
+        }
+      </div>
+    </div>
+  </div>
+}

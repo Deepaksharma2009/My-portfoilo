@@ -1,0 +1,129 @@
+<section id="home" class="hero-section" aria-label="Hero - Introduction">
+  <!-- Animated background blobs -->
+  <div class="hero-bg" aria-hidden="true">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+    <div class="grid-overlay"></div>
+  </div>
+
+  <div class="container hero-container">
+    <div class="row align-items-center min-vh-100 py-5">
+
+      <!-- Left: Text Content -->
+      <div class="col-lg-7 hero-content">
+        <!-- Availability Badge -->
+        @if (hero.isAvailable) {
+          <div class="availability-badge" role="status">
+            <span class="status-dot" aria-hidden="true"></span>
+            {{ hero.availabilityStatus }}
+          </div>
+        }
+
+        <!-- Name -->
+        <h1 class="hero-name">
+          Hi, I'm <span class="gradient-text">{{ hero.name }}</span>
+        </h1>
+
+        <!-- Animated Typewriter Title -->
+        <div class="hero-title" aria-live="polite" aria-atomic="true">
+          <span class="typed-text">{{ displayedTitle }}</span>
+          <span class="cursor" aria-hidden="true">|</span>
+        </div>
+
+        <!-- Headline -->
+        <p class="hero-headline">{{ hero.headline }}</p>
+
+        <!-- Intro -->
+        <p class="hero-intro">{{ hero.intro }}</p>
+
+        <!-- Tech Icons Row -->
+        <div class="tech-icons" aria-label="Technologies I work with">
+          @for (tech of hero.techIcons; track tech.name) {
+            <div class="tech-icon-item" [title]="tech.name" [attr.aria-label]="tech.name">
+              <i [class]="tech.icon" [style.color]="tech.color"></i>
+            </div>
+          }
+        </div>
+
+        <!-- CTA Buttons -->
+        <div class="hero-actions d-flex flex-wrap gap-3 mt-4">
+          <button
+            class="btn-gradient"
+            (click)="scrollToSection('projects')"
+            aria-label="View my projects"
+          >
+            <i class="fas fa-briefcase"></i>
+            View My Projects
+          </button>
+          <button
+            class="btn-outline-gradient"
+            (click)="scrollToSection('contact')"
+            aria-label="Contact me"
+          >
+            <i class="fas fa-envelope"></i>
+            Contact Me
+          </button>
+          <button
+            class="btn-resume-hero"
+            (click)="downloadResume()"
+            aria-label="Download Resume"
+          >
+            <i class="fas fa-download"></i>
+            Resume
+          </button>
+        </div>
+
+        <!-- Social Links -->
+        <div class="social-links mt-4" aria-label="Social media links">
+          @for (link of hero.socialLinks; track link.platform) {
+            <a
+              [href]="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="social-link"
+              [attr.aria-label]="link.platform + ' profile'"
+            >
+              <i [class]="link.icon"></i>
+            </a>
+          }
+        </div>
+      </div>
+
+      <!-- Right: Profile Card -->
+      <div class="col-lg-5 hero-visual d-none d-lg-flex justify-content-center">
+        <div class="profile-card" aria-hidden="true">
+          <div class="profile-image-wrapper">
+            <img
+              src="assets/images/profile.jpg"
+              alt="Deepak Sharma"
+              class="profile-image"
+            />
+            <div class="profile-ring"></div>
+            <div class="profile-ring ring-2"></div>
+          </div>
+
+          <!-- Floating tech badges -->
+          <div class="float-badge badge-react">
+            <i class="fab fa-react"></i> React
+          </div>
+          <div class="float-badge badge-angular">
+            <i class="fab fa-angular"></i> Angular
+          </div>
+          <div class="float-badge badge-node">
+            <i class="fab fa-node-js"></i> Node.js
+          </div>
+          <div class="float-badge badge-ms">
+            <i class="fab fa-microsoft"></i> SharePoint
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-indicator" aria-hidden="true">
+      <div class="scroll-dot"></div>
+    </div>
+  </div>
+</section>

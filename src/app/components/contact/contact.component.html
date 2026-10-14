@@ -1,0 +1,218 @@
+<section id="contact" aria-labelledby="contact-heading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Contact</span>
+      <h2 class="section-title" id="contact-heading">Get In Touch</h2>
+      <p class="section-subtitle">Have a project in mind or want to collaborate? Let's talk.</p>
+    </div>
+
+    <div class="row gy-5 justify-content-center">
+
+      <!-- Contact Info -->
+      <div class="col-lg-4">
+        <div class="contact-info-card glass-card">
+          <h3 class="contact-info-title">Contact Information</h3>
+          <p class="contact-info-note">
+            <i class="fas fa-info-circle" aria-hidden="true"></i>
+            This form opens your default email client. No data is sent to any server.
+          </p>
+
+          <div class="contact-links">
+            <a
+              [href]="'mailto:' + contactInfo.email"
+              class="contact-link"
+              aria-label="Send email to Deepak"
+            >
+              <div class="contact-link-icon">
+                <i class="fas fa-envelope" aria-hidden="true"></i>
+              </div>
+              <div>
+                <div class="contact-link-label">Email</div>
+                <div class="contact-link-value">{{ contactInfo.email }}</div>
+              </div>
+            </a>
+
+            @if (contactInfo.github) {
+              <a
+                [href]="contactInfo.github"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-link"
+                aria-label="GitHub profile"
+              >
+                <div class="contact-link-icon">
+                  <i class="fab fa-github" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <div class="contact-link-label">GitHub</div>
+                  <div class="contact-link-value">View Repositories</div>
+                </div>
+              </a>
+            }
+
+            @if (contactInfo.linkedin) {
+              <a
+                [href]="contactInfo.linkedin"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="contact-link"
+                aria-label="LinkedIn profile"
+              >
+                <div class="contact-link-icon">
+                  <i class="fab fa-linkedin" aria-hidden="true"></i>
+                </div>
+                <div>
+                  <div class="contact-link-label">LinkedIn</div>
+                  <div class="contact-link-value">Connect with me</div>
+                </div>
+              </a>
+            }
+
+            <div class="contact-link">
+              <div class="contact-link-icon">
+                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+              </div>
+              <div>
+                <div class="contact-link-label">Location</div>
+                <div class="contact-link-value">{{ contactInfo.location }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="col-lg-7">
+        <div class="contact-form-card glass-card">
+
+          @if (formState() === 'success') {
+            <!-- Success State -->
+            <div class="form-success" role="alert">
+              <div class="success-icon">
+                <i class="fas fa-check-circle" aria-hidden="true"></i>
+              </div>
+              <h3>Your email client has been opened!</h3>
+              <p>Please send the pre-filled email from your mail app. If it didn't open, email directly at <a [href]="'mailto:' + contactInfo.email">{{ contactInfo.email }}</a>.</p>
+              <button class="btn-gradient" (click)="resetForm()">
+                <i class="fas fa-pen"></i> Send Another
+              </button>
+            </div>
+          } @else {
+            <!-- Form -->
+            <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" novalidate aria-label="Contact form">
+              <div class="row gy-3">
+
+                <!-- Name -->
+                <div class="col-md-6">
+                  <label for="contact-name" class="form-label">Full Name <span aria-hidden="true">*</span></label>
+                  <input
+                    id="contact-name"
+                    type="text"
+                    class="form-input"
+                    [class.error]="isInvalid('name')"
+                    formControlName="name"
+                    placeholder="Deepak Sharma"
+                    autocomplete="name"
+                    aria-required="true"
+                    [attr.aria-invalid]="isInvalid('name')"
+                    aria-describedby="name-error"
+                  />
+                  @if (isInvalid('name')) {
+                    <span class="field-error" id="name-error" role="alert">
+                      @if (name.errors?.['required']) { Name is required. }
+                      @else if (name.errors?.['minlength']) { Name must be at least 2 characters. }
+                    </span>
+                  }
+                </div>
+
+                <!-- Email -->
+                <div class="col-md-6">
+                  <label for="contact-email" class="form-label">Email Address <span aria-hidden="true">*</span></label>
+                  <input
+                    id="contact-email"
+                    type="email"
+                    class="form-input"
+                    [class.error]="isInvalid('email')"
+                    formControlName="email"
+                    placeholder="you@example.com"
+                    autocomplete="email"
+                    aria-required="true"
+                    [attr.aria-invalid]="isInvalid('email')"
+                    aria-describedby="email-error"
+                  />
+                  @if (isInvalid('email')) {
+                    <span class="field-error" id="email-error" role="alert">
+                      @if (email.errors?.['required']) { Email is required. }
+                      @else if (email.errors?.['email']) { Please enter a valid email address. }
+                    </span>
+                  }
+                </div>
+
+                <!-- Subject -->
+                <div class="col-12">
+                  <label for="contact-subject" class="form-label">Subject <span aria-hidden="true">*</span></label>
+                  <input
+                    id="contact-subject"
+                    type="text"
+                    class="form-input"
+                    [class.error]="isInvalid('subject')"
+                    formControlName="subject"
+                    placeholder="Project inquiry / Collaboration / Question"
+                    aria-required="true"
+                    [attr.aria-invalid]="isInvalid('subject')"
+                    aria-describedby="subject-error"
+                  />
+                  @if (isInvalid('subject')) {
+                    <span class="field-error" id="subject-error" role="alert">
+                      @if (subject.errors?.['required']) { Subject is required. }
+                      @else if (subject.errors?.['minlength']) { Subject must be at least 4 characters. }
+                    </span>
+                  }
+                </div>
+
+                <!-- Message -->
+                <div class="col-12">
+                  <label for="contact-message" class="form-label">Message <span aria-hidden="true">*</span></label>
+                  <textarea
+                    id="contact-message"
+                    class="form-input form-textarea"
+                    [class.error]="isInvalid('message')"
+                    formControlName="message"
+                    placeholder="Tell me about your project or what you'd like to discuss..."
+                    rows="5"
+                    aria-required="true"
+                    [attr.aria-invalid]="isInvalid('message')"
+                    aria-describedby="message-error"
+                  ></textarea>
+                  @if (isInvalid('message')) {
+                    <span class="field-error" id="message-error" role="alert">
+                      @if (message.errors?.['required']) { Message is required. }
+                      @else if (message.errors?.['minlength']) { Message must be at least 20 characters. }
+                    </span>
+                  }
+                </div>
+
+                <!-- Submit -->
+                <div class="col-12">
+                  <button
+                    type="submit"
+                    class="btn-gradient w-100 submit-btn"
+                    [disabled]="formState() === 'submitting'"
+                    [attr.aria-busy]="formState() === 'submitting'"
+                  >
+                    @if (formState() === 'submitting') {
+                      <i class="fas fa-spinner fa-spin" aria-hidden="true"></i> Opening Email Client...
+                    } @else {
+                      <i class="fas fa-paper-plane" aria-hidden="true"></i> Send Message
+                    }
+                  </button>
+                </div>
+
+              </div>
+            </form>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

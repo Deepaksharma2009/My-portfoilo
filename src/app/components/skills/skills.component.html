@@ -1,0 +1,30 @@
+<section id="skills" aria-labelledby="skills-heading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Technical Skills</span>
+      <h2 class="section-title" id="skills-heading">My Tech Stack</h2>
+      <p class="section-subtitle">Technologies and tools I use to build modern applications</p>
+    </div>
+
+    <div class="skills-grid">
+      @for (category of skillCategories; track category.title) {
+        <div class="skill-card glass-card">
+          <div class="skill-card-header">
+            <div class="skill-icon-wrapper" [style.background]="'rgba(' + hexToRgb(category.color) + ', 0.15)'" [style.border-color]="'rgba(' + hexToRgb(category.color) + ', 0.3)'">
+              <i [class]="category.icon" [style.color]="category.color" aria-hidden="true"></i>
+            </div>
+            <h3 class="skill-category-title">{{ category.title }}</h3>
+          </div>
+          <div class="skill-tags" role="list" [attr.aria-label]="category.title + ' skills'">
+            @for (skill of category.skills; track skill.name) {
+              <span class="skill-tag" role="listitem">
+                <i [class]="skill.icon" aria-hidden="true"></i>
+                {{ skill.name }}
+              </span>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</section>

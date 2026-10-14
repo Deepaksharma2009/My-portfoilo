@@ -1,0 +1,87 @@
+<nav class="navbar-wrapper" [class.scrolled]="isScrolled()" role="navigation" aria-label="Main navigation">
+  <div class="container d-flex align-items-center justify-content-between">
+
+    <!-- Logo -->
+    <a class="navbar-brand" href="#home" (click)="scrollTo('#home')" aria-label="Deepak Sharma - Home">
+      <span class="logo-text">DS</span>
+      <span class="logo-name">Deepak Sharma</span>
+    </a>
+
+    <!-- Desktop Nav -->
+    <ul class="nav-links d-none d-lg-flex align-items-center list-unstyled mb-0" role="list">
+      @for (item of navItems; track item.href) {
+        <li>
+          <a
+            [href]="item.href"
+            class="nav-link"
+            [class.active]="activeSection() === item.href.replace('#', '')"
+            (click)="scrollTo(item.href); $event.preventDefault()"
+          >
+            {{ item.label }}
+          </a>
+        </li>
+      }
+    </ul>
+
+    <!-- Actions -->
+    <div class="nav-actions d-none d-lg-flex align-items-center gap-2">
+      <button
+        class="btn-theme-toggle"
+        (click)="themeService.toggleTheme()"
+        [attr.aria-label]="themeService.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+        [attr.title]="themeService.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <i [class]="themeService.isDark() ? 'fas fa-sun' : 'fas fa-moon'"></i>
+      </button>
+      <button class="btn-gradient btn-resume" (click)="downloadResume()" aria-label="Download Resume">
+        <i class="fas fa-download"></i>
+        Resume
+      </button>
+    </div>
+
+    <!-- Mobile Hamburger -->
+    <div class="d-flex d-lg-none align-items-center gap-2">
+      <button
+        class="btn-theme-toggle"
+        (click)="themeService.toggleTheme()"
+        [attr.aria-label]="themeService.isDark() ? 'Switch to light mode' : 'Switch to dark mode'"
+      >
+        <i [class]="themeService.isDark() ? 'fas fa-sun' : 'fas fa-moon'"></i>
+      </button>
+      <button
+        class="hamburger"
+        (click)="toggleMenu()"
+        [class.open]="isMenuOpen()"
+        aria-label="Toggle mobile menu"
+        [attr.aria-expanded]="isMenuOpen()"
+      >
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" [class.open]="isMenuOpen()" role="dialog" aria-label="Mobile navigation">
+    <ul class="mobile-nav-links list-unstyled mb-0" role="list">
+      @for (item of navItems; track item.href) {
+        <li>
+          <a
+            [href]="item.href"
+            class="mobile-nav-link"
+            [class.active]="activeSection() === item.href.replace('#', '')"
+            (click)="scrollTo(item.href); $event.preventDefault()"
+          >
+            {{ item.label }}
+          </a>
+        </li>
+      }
+      <li>
+        <button class="btn-gradient w-100 mt-2" (click)="downloadResume(); closeMenu()" aria-label="Download Resume">
+          <i class="fas fa-download"></i> Download Resume
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>

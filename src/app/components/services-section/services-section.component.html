@@ -1,0 +1,29 @@
+<section id="services" aria-labelledby="services-heading">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Services</span>
+      <h2 class="section-title" id="services-heading">What I Offer</h2>
+      <p class="section-subtitle">Professional services to help you build and scale your digital products</p>
+    </div>
+
+    <div class="services-grid">
+      @for (service of services; track service.title) {
+        <div class="service-card glass-card" [style.--service-color]="service.color">
+          <div class="service-icon-wrapper" aria-hidden="true">
+            <i [class]="service.icon"></i>
+          </div>
+          <h3 class="service-title">{{ service.title }}</h3>
+          <p class="service-description">{{ service.description }}</p>
+          <ul class="service-features" [attr.aria-label]="service.title + ' features'">
+            @for (feature of service.features; track feature) {
+              <li>
+                <i class="fas fa-check" aria-hidden="true"></i>
+                {{ feature }}
+              </li>
+            }
+          </ul>
+        </div>
+      }
+    </div>
+  </div>
+</section>

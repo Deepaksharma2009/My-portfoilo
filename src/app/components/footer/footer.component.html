@@ -1,0 +1,93 @@
+<footer class="footer" role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+
+      <!-- Brand -->
+      <div class="footer-brand">
+        <div class="footer-logo">
+          <span class="logo-mark">DS</span>
+          <span class="logo-name">Deepak Sharma</span>
+        </div>
+        <p class="footer-tagline">Full Stack Developer</p>
+        <p class="footer-desc">
+          Building modern web applications and enterprise solutions with a passion for clean code and exceptional user experiences.
+        </p>
+        <div class="footer-socials" aria-label="Social media links">
+          @for (link of socialLinks; track link.platform) {
+            <a
+              [href]="link.url"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="footer-social-link"
+              [attr.aria-label]="link.platform"
+            >
+              <i [class]="link.icon" aria-hidden="true"></i>
+            </a>
+          }
+          <a
+            [href]="'mailto:' + contactInfo.email"
+            class="footer-social-link"
+            aria-label="Email Deepak"
+          >
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Quick Links -->
+      <div class="footer-links-section">
+        <h4 class="footer-section-title">Quick Links</h4>
+        <ul class="footer-links" role="list">
+          @for (item of navItems; track item.href) {
+            <li>
+              <a
+                [href]="item.href"
+                (click)="scrollTo(item.href); $event.preventDefault()"
+                class="footer-link"
+              >
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                {{ item.label }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="footer-contact-section">
+        <h4 class="footer-section-title">Contact</h4>
+        <div class="footer-contact-items">
+          <a [href]="'mailto:' + contactInfo.email" class="footer-contact-item">
+            <i class="fas fa-envelope" aria-hidden="true"></i>
+            {{ contactInfo.email }}
+          </a>
+          <div class="footer-contact-item">
+            <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+            {{ contactInfo.location }}
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="footer-bottom">
+      <p class="footer-copyright">
+        &copy; {{ currentYear }} Deepak Sharma. All rights reserved.
+      </p>
+      <p class="footer-made-with">
+        Made with <i class="fas fa-heart" style="color: #ef4444" aria-label="love"></i> using Angular
+      </p>
+    </div>
+  </div>
+
+  <!-- Back to Top -->
+  <button
+    class="back-to-top"
+    (click)="scrollToTop()"
+    aria-label="Back to top"
+    title="Back to top"
+  >
+    <i class="fas fa-arrow-up" aria-hidden="true"></i>
+  </button>
+</footer>
